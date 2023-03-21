@@ -13,7 +13,8 @@ The patterns can be divided into
 
 ## Stability patterns
 
-Intended to be applied by distributed aspplications to improve their own stability and the stability of the larger systems the're a part of.
+Intended to be applied by distributed applications to improve their own stability and the stability of the larger systems they're a part of.
 
 - *Circuit Breaker*
+- *Debounce* (both function-first and function-last approaches)
 
