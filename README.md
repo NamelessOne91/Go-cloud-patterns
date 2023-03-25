@@ -17,4 +17,5 @@ Intended to be applied by distributed applications to improve their own stabilit
 
 - *Circuit Breaker*
 - *Debounce* (both function-first and function-last approaches)
+- *Retry*
 
