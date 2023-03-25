@@ -2,10 +2,12 @@ package throttle
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"sync"
 	"time"
 )
+
+var errThrottling = errors.New("too many calls")
 
 // Effector is a function interacting with a service
 type Effector func(context.Context) (string, error)
@@ -49,7 +51,7 @@ func Throttle(e Effector, max uint, refill uint, d time.Duration) Effector {
 		// can also return the results of the last function call
 		// or use a queue to retry calls later
 		if tokens <= 0 {
-			return "", fmt.Errorf("too many calls")
+			return "", errThrottling
 		}
 		tokens--
 
