@@ -12,7 +12,7 @@ type Circuit func(context.Context) (string, error)
 
 // DebounceFirst is a function-first implementation that wraps a Circuit function
 // forcing overlapping calls to wait untill the result is cached and guarantees circuit
-// is called exactly once, at the beginning of a cluster
+// is called exactly once, at the beginning of a cluster of calls
 func DebounceFirst(circuit Circuit, d time.Duration) Circuit {
 	var threshold time.Time
 	var result string
@@ -37,8 +37,8 @@ func DebounceFirst(circuit Circuit, d time.Duration) Circuit {
 	}
 }
 
-// DebounceLast is a function is a functionlast implementation that wraps a Circuit function
-// and waits for a pause after a seris of calls before calling the inner function.
+// DebounceLast is a functionlast implementation that wraps a Circuit function
+// and waits for a pause after a cluster of calls before calling the inner function.
 // Since this implementation won't provide an immediate response, it is useful only if
 // your function doesn't need results ASAP
 func DebounceLast(circuit Circuit, d time.Duration) Circuit {
