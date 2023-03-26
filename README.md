@@ -27,4 +27,5 @@ Applied to manage multiple, simultaneos, requests from multiple client avoiding 
 
 - *Fan-In*
 - *Fan-Out*
+- *Future*
 
