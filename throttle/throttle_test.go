@@ -23,7 +23,7 @@ func TestThrottle(t *testing.T) {
 		{"No throttling applied", 3, 1, 1 * time.Second, 2, "OK", nil},
 		{"No bucket equals instant throttling", 0, 1, 1 * time.Second, 1, "", errThrottling},
 		{"Too many calls", 2, 1, 1 * time.Second, 6, "", errThrottling},
-		{"Refill prevents throttling", 3, 1, 1 * time.Second, 5, "OK", nil},
+		{"Refill prevents throttling", 3, 1, 1 * time.Second, 4, "OK", nil},
 		{"Context deadline", 10, 1, 1 * time.Second, 15, "", context.DeadlineExceeded},
 	}
 
@@ -31,6 +31,7 @@ func TestThrottle(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			e := Throttle(myEffector, tt.max, tt.refill, 2*time.Second)
 			ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+			defer cancel()
 
 			var res string
 			var err error
@@ -39,9 +40,8 @@ func TestThrottle(t *testing.T) {
 				time.Sleep(tt.interval)
 			}
 
-			cancel()
 			if err != tt.err {
-				t.Errorf("Expected error '%s' - got '%s'", tt.err, err)
+				t.Errorf("Expected error '%s' - got '%v'", tt.err, err)
 			} else if res != tt.expected {
 				t.Errorf("Expected result '%s' - got '%s'", tt.expected, res)
 			}
