@@ -26,4 +26,5 @@ Intended to be applied by distributed applications to improve their own stabilit
 Applied to manage multiple, simultaneos, requests from multiple client avoiding bottlenecks.
 
 - *Fan-In*
+- *Fan-Out*
 
