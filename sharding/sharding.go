@@ -17,10 +17,11 @@ type ShardedMap[V any] []*Shard[V]
 
 // NewShardedMap creates a new ShardedMap consisting of nshards Shard, allowing to
 // concurrently update and/or read from each one of them
-func NewShardedMap[V any](nshards int) ShardedMap[V] {
+func NewShardedMap[V any](nshards uint) ShardedMap[V] {
 	shards := make([]*Shard[V], nshards)
 
-	for i := 0; i < nshards; i++ {
+	var i uint
+	for ; i < nshards; i++ {
 		shard := make(map[string]V)
 		shards[i] = &Shard[V]{m: shard}
 	}
